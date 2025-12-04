@@ -37,7 +37,7 @@ class Inversion {
         return capital;
     }
     virtual void mostrar() const {
-        cout << "Capital invertido: $" << capital << " Tiempo: " << tiempo << " anos\n" << endl;
+        cout << "Capital invertido: $" << capital << " Tiempo: " << tiempo << " annos\n" << endl;
     }
 };
 
@@ -55,15 +55,15 @@ class CETES : public Inversion {
     //aqui se calcula el rendimiento en CETES
     double rendimiento() const override {
         //recibe la tasa en numeros naturales como 7.4%
-        double tasa = (tasaCETES / 100.0);
+        double tasa=(tasaCETES/100.0);
         //capital inicial multiplicado por 100% más el porcentaje de la tasa por la cantidad de años que han transcurrido
-        double rend = capital *(1+tasa)*tiempo;
+        double rend=capital*(1+tasa)*tiempo;
         return rend;
     }
 
     //metodo polimorfico para mostrar el rendimiento en CETES
     void mostrar() const override {
-        cout << "CETES" << endl;
+        cout << "CETES" <<endl;
         Inversion::mostrar();
         cout << "Rendimiento: $" << rendimiento() << "\n" << endl;
     }
@@ -84,15 +84,15 @@ class Interes : public Inversion {
     //aqui se calcula el interes compuesto
     double rendimiento() const override {
         //r es la tasa de interés anual en decimales
-        double r = (tasaInteres/100.0);
+        double r=(tasaInteres/100.0);
         // p es el capital inicial (principal)
-        double p = capital;
+        double p=capital;
         //vf es el valor futuro de la inversión
-        double vf = 0;
+        double vf=0;
         // pmt es el valor de la contribución mensual
-        double pmt = ahorro;
+        double pmt=ahorro;
         // t es el tiempo en años
-        int t = tiempo;
+        int t=tiempo;
         //formula es VF = P(1 + r/n)^(t) + PMT[((1 + r/n)^(t) - 1) / (r/n)]
         vf=(p*pow((1+(r/12.0)),12*t))+(pmt*(((pow((1+r/12.0),12*t))-1)/(r/12.0)));
         return vf;
@@ -103,7 +103,7 @@ class Interes : public Inversion {
         cout << "\nInteres Compuesto" << endl;
         Inversion::mostrar();
         cout << "Aporte mensual: $" << ahorro << endl;
-        cout << "Rendimiento: $" << rendimiento() << endl;
+        cout << "Rendimiento: $" <<rendimiento() << endl;
     }
 };
 
@@ -121,18 +121,19 @@ class CuentaAhorros : public Inversion {
     //aqui se  calcula un balance de ahorros simple (sin tasa de rendimiento)
     double rendimiento() const override {
         //solo suma el capital por el ahorro mensual multiplicado por los años
-        return capital + ahorroMensual * 12 * tiempo;
+        int annos=tiempo*12;
+        return capital+(ahorroMensual*annos);
     }
 
     // balance total sumando todos los rendimientos que el usuario agregue
     void mostrar() const override {
         Inversion::mostrar();
-        cout << "Total en la cuenta de ahorros: $" << rendimiento() << "\n" << endl;
+        cout << "Total en la cuenta de ahorros: $" << rendimiento() <<"\n"<< endl;
     }
 
     //sirve para guardar rendimientos de CETES y de interés compuesto, solo recibe un numero y lo suma al capital inicial
     void depositarGanancias(double ganancia) {
-        capital += ganancia;
+        capital+=ganancia;
     }
 };
 
@@ -189,7 +190,7 @@ public:
         return portafolio;
     }
     void mostrarPortafolio() {
-        cout << "\n" << nombre << endl;
+        cout << "\n"<< nombre << endl;
         portafolio.mostrarTodo();
     }
 };
@@ -202,13 +203,13 @@ int main() {
 
     //primero guardo la informacion del usuario
     cout << "Bienvenido al portafolio de inversiones" << endl;
-    cout << "Ingresa tu nombre: " << endl;
+    cout << "Ingresa tu nombre: " <<endl;
     cin >> _nombreusuario;
-    cout << "Ingresa tu capital inicial: " << endl;
+    cout <<"Ingresa tu capital inicial: " << endl;
     cin >> _capital;
     cout << "Ingresa tu ahorro mensual: " << endl;
     cin >> _ahorro;
-    cout << "Ingresa el periodo de inversion en anos: " << endl;
+    cout <<"Ingresa el periodo de inversion en anos: " <<endl;
     cin >> _tiempo;
 
     //luego creo los objetos correspondientes de cada clase
@@ -235,7 +236,7 @@ int main() {
                 cin >> tasa;
                 cout << "Ingresa el periodo en anos: " << endl;
                 cin >> tiempo;
-                Inversion *nueva = new CETES(capital, tiempo, tasa);
+                Inversion *nueva=new CETES(capital, tiempo, tasa);
                 usuario.getPortafolio().agregarInversion(*nueva);
                 break;
             }
@@ -250,12 +251,12 @@ int main() {
                 cin >> meses;
                 cout << "Contribucion mensual: " << endl;
                 cin >> ahorro;
-                Inversion *nueva = new Interes(capital, meses, ahorro, tasa);
+                Inversion *nueva=new Interes(capital, meses, ahorro, tasa);
                 usuario.getPortafolio().agregarInversion(*nueva);
                 break;
             }
         }
-    } while (opcion != 4);
+    } while (opcion!=4);
     return 0;
 }
 
