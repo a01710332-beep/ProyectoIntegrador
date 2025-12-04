@@ -14,7 +14,7 @@ class Inversion {
     Inversion(double _capital, int _tiempo): capital(_capital), tiempo(_tiempo) {
     }
 
-    //metodo destructor que se reutiliza en todas las subclases
+    //metodo destructor por buenas prácticas
     virtual ~Inversion() {
     }
 
@@ -52,7 +52,7 @@ class CETES : public Inversion {
     ~CETES() override {
     }
 
-    //metodo polimorfico que calcula el rendimiento en CETES
+    //aqui se calcula el rendimiento en CETES
     double rendimiento() const override {
         //recibe la tasa en numeros naturales como 7.4%
         double tasa = (tasaCETES / 100.0);
@@ -81,7 +81,7 @@ class Interes : public Inversion {
     ~Interes() override {
     }
 
-    //metodo polimorfico para calcular el interes compuesto
+    //aqui se calcula el interes compuesto
     double rendimiento() const override {
         //r es la tasa de interés anual en decimales
         double r = (tasaInteres/100.0);
@@ -98,7 +98,7 @@ class Interes : public Inversion {
         return vf;
     }
 
-    //metodo polimorfico para mostrar el rendimiento con interés compiuesto
+    //mostrar el rendimiento con interés compiuesto
     void mostrar() const override {
         cout << "\nInteres Compuesto" << endl;
         Inversion::mostrar();
@@ -118,13 +118,13 @@ class CuentaAhorros : public Inversion {
     ~CuentaAhorros() override {
     }
 
-    //el metodo polimorfico calcula un balance de ahorros simple (sin tasa de rendimiento)
+    //aqui se  calcula un balance de ahorros simple (sin tasa de rendimiento)
     double rendimiento() const override {
         //solo suma el capital por el ahorro mensual multiplicado por los años
         return capital + ahorroMensual * 12 * tiempo;
     }
 
-    //este metodo muestra el balance total sumando todos los rendimientos que el usuario agregue
+    // balance total sumando todos los rendimientos que el usuario agregue
     void mostrar() const override {
         Inversion::mostrar();
         cout << "Total en la cuenta de ahorros: $" << rendimiento() << "\n" << endl;
@@ -136,7 +136,7 @@ class CuentaAhorros : public Inversion {
     }
 };
 
-//la clase más importante que guarda toda la información
+
 class Portafolio {
     protected:
     //una cuenta de tipo CuentaAhorros que tiene el capital, el tiempo, la ganancia y el ahorro mensual
@@ -153,13 +153,13 @@ class Portafolio {
     ~Portafolio() {
     }
 
-    //este metodo usa push_back (append en python) para agregar dinero al portafolio
+    //aqui se debe usar push_back (append en python) para agregar dinero al portafolio
     void agregarInversion(Inversion &_inversion) {
         //ganancia guarda el capital inicial que usa el metodo de la superclase y luego guarda los rendimientos de las subclases
         double ganancia=_inversion.rendimiento();
-        //se usa el metodo de la subclase CuentaAhorros para guardar la variable ganancia y que se imprima todo junto
+        //uso el metodo de la subclase CuentaAhorros para guardar la variable ganancia y que se imprima todo junto
         cuenta.depositarGanancias(ganancia);
-        //se agrega el capital inicial o los rendimientos al vector agregadas
+        //agrego el capital inicial o los rendimientos al vector agregadas
         agregadas.push_back(&_inversion);
     }
 
@@ -174,7 +174,7 @@ class Portafolio {
     }
 };
 
-//la clase usuario se usa para la interfaz, para que cada usuario cree y guarde su portafolio, cuenta, etc
+//para que cada usuario cree y guarde su portafolio, cuenta, etc
 class Usuario {
 protected:
     string nombre;
@@ -200,7 +200,7 @@ int main() {
     int _tiempo;
     string _nombreusuario;
 
-    //primero se guarda la informacion del usuario
+    //primero guardo la informacion del usuario
     cout << "Bienvenido al portafolio de inversiones" << endl;
     cout << "Ingresa tu nombre: " << endl;
     cin >> _nombreusuario;
@@ -211,7 +211,7 @@ int main() {
     cout << "Ingresa el periodo de inversion en anos: " << endl;
     cin >> _tiempo;
 
-    //luego se crean los objetos correspondientes de cada clase
+    //luego creo los objetos correspondientes de cada clase
     CuentaAhorros cuenta(_capital,_tiempo, _ahorro);
     Portafolio portafolio("Portafolio de inversiones", cuenta);
     Usuario usuario(_nombreusuario, portafolio);
